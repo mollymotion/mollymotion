@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MollyMotion — Motion Design · Video Editing · Web Development</title>
+  <meta name="description" content="MollyMotion: motion design, video editing, and lean web builds." />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            /* Remove or change overflow: hidden to allow scrolling */
+            /* overflow: hidden; */
+        }
+
+        .gradient-canvas {
+            width: 100%;
+            height: 100%;
+            --gradient-color-1: #005079;
+            --gradient-color-2: #490070;
+            --gradient-color-3: #060022;
+            --gradient-color-4: #005ea6;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+
+      :root{
+        --paper:#111214;
+        --surface:#161718;
+        --ink:#e9e9e9;
+        --ink-2:#b5b5b5;
+        --line:#2a2c2d;
+        --accent:#00baff;
+        --header-bg: rgba(16,16,17,.75);
+        --thumb:#222325;
+        --btn-bg:#2a2c2d;
+        --btn-ink:#e9e9e9;
+        --btn-accent:#00baff;
+        --shadow: 0 14px 40px rgba(0,186,255,.22);
+        --bg-base:#0f1012;
+        --bg-gradient:none;
+      }
+
+    /* ===========================
+       Base & Layout
+    ============================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial;
+      background: transparent;
+      /* Remove background-color and background-image from body */
+      /* background-color: var(--bg-base); */
+      /* background-image: var(--bg-gradient); */
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .page {
+      width: min(1240px, 96vw);
+      margin: 18px auto;
+      /* Remove background from .page */
+      /* background: var(--paper); */
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: clip;
+      box-shadow: var(--shadow);
+    }
+    .wrap { width: min(1100px, 92vw); margin: 0 auto; }
+
+    /* ===========================
+       Typography
+    ============================ */
+    h1 {
+      font-size: clamp(2rem,4.5vw,3.2rem);
+      line-height: 1.06;
+      letter-spacing: -.02em;
+      margin: 0 0 .6rem;
+    }
+    h2 {
+      font-size: clamp(1.6rem,3vw,2.1rem);
+      line-height: 1.12;
+      margin: 0 0 .4rem;
+    }
+    h3 { font-size: 1.05rem; margin: 0 0 .25rem; color: #00baff; }
+    p { margin: 0 0 1rem; color: var(--ink-2); }
+
+    /* ===========================
+       Header & Navigation
+    ============================ */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--header-bg);
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .navwrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .brand:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 6px;
+      text-decoration-color: var(--accent);
+    }
+    nav {
+      display: flex;
+      gap: .75rem;
+      align-items: center;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+    .cta, .toggle {
+      border: 1px solid var(--accent);
+      padding: .45rem .7rem;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+    }
+    .cta:hover, .toggle:hover {
+      opacity: .85;
+      border-color: var(--ink);
+    }
+
+    /* ===========================
+       Sections & Layout
+    ============================ */
+    section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 84px;
+      position: relative;
+      background: var(--paper);
+    }
+    .head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      gap: 1rem;
+    }
+    .sub { color: var(--ink-2); }
+
+    /* ===========================
+       Buttons
+    ============================ */
+    .btn {
+      display: inline-block;
+      padding: .72rem 1rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: var(--btn-bg);
+      color: var(--btn-ink);
+      font-weight: 600;
+    }
+    .btn:hover { opacity: .92; }
+    .ghost {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .ghost:hover {
+      color: var(--accent);
+      border-color: var(--ink);
+    }
+    .btn-accent {
+      background: var(--btn-accent);
+      color: #0a0b0c;
+    }
+
+    /* ===========================
+       Grids & Cards
+    ============================ */
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.1rem;
+    }
+    .card {
+      background-color: #010101;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.1rem;
+    }
+    .copycols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
+    }
+    .grid3 a.card {
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      box-shadow: 0 2px 8px rgba(0,186,255,.10);
+      border: 1px solid var(--line);
+      background-color: #010101;
+    }
+    .grid3 a.card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,186,255,.13);
+      border-color: color-mix(in oklab, var(--accent) 30%, var(--line));
+    }
+
+    /* ===========================
+       Portfolio Cards
+    ============================ */
+    .pcard {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      box-shadow: 0 2px 8px rgba(0,186,255,.10);
+    }
+    .pcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(0,186,255,.13);
+      border-color: color-mix(in oklab, var(--accent) 30%, var(--line));
+    }
+    .pthumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--thumb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .pthumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .pmeta { padding: .9rem 1rem; }
+    .ptags {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: .4rem 0 0;
+      padding: 0;
+    }
+    .ptags li {
+      font-size: .8rem;
+      border: 1px solid var(--line);
+      padding: .15rem .45rem;
+      border-radius: 999px;
+      color: var(--ink-2);
+    }
+    .ptags li:hover {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, transparent);
+    }
+
+    #about, #branding, #work {
+        background-color: #010101;
+    }
+
+    #contact {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    #contact h2 {
+        color: #00baff;
+    }
+
+    #services {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-top: 0px;
+    }
+
+    /* ===========================
+       Accessibility
+    ============================ */
+    a:focus-visible, button:focus-visible, .pcard:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+
+    /* ===========================
+       Footer
+    ============================ */
+    footer {
+      padding: 32px 0;
+      color: var(--ink-2);
+    }
+
+    /* ===========================
+       Hero Section
+    ============================ */
+    .hero {
+      padding: 12vh 0 8vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-bottom: none;
+    }
+    .hero .actions {
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+
+    /* ===========================
+       Fallbacks
+    ============================ */
+    @supports not (color-mix(in oklab, white, black)){
+      .pcard:hover { border-color: var(--accent); }
+      .ptags li:hover { background: transparent; }
+    }
+
+    /* ===========================
+       Responsive
+    ============================ */
+    @media (max-width: 880px){
+      .grid3 { grid-template-columns: 1fr; }
+      .copycols { grid-template-columns: 1fr; }
+      nav { gap: .5rem; }
+      .page { margin: 10px auto; border-radius: 18px; }
+    }
+
+    .snoozli-card .snoozli-img {
+      transition: opacity 0.18s;
+    }
+    .snoozli-card:hover .snoozli-img {
+      opacity: 0;
+    }
+    .snoozli-card .pthumb {
+      position: relative;
+    }
+    .snoozli-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/snoozli-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .snoozli-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Lyric Video hover */
+    .lyric-card .lyric-img {
+      transition: opacity 0.18s;
+    }
+    .lyric-card:hover .lyric-img {
+      opacity: 0;
+    }
+    .lyric-card .pthumb {
+      position: relative;
+    }
+    .lyric-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/lyric-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .lyric-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Logo Reveal hover */
+    .logo-card .logo-img {
+      transition: opacity 0.18s;
+    }
+    .logo-card:hover .logo-img {
+      opacity: 0;
+    }
+    .logo-card .pthumb {
+      position: relative;
+    }
+    .logo-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/logo-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .logo-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Band Website hover */
+    .web-card .web-img {
+      transition: opacity 0.18s;
+    }
+    .web-card:hover .web-img {
+      opacity: 0;
+    }
+    .web-card .pthumb {
+      position: relative;
+    }
+    .web-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/web-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .web-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Interview Edit hover */
+    .interview-card .interview-img {
+      transition: opacity 0.18s;
+    }
+    .interview-card:hover .interview-img {
+      opacity: 0;
+    }
+    .interview-card .pthumb {
+      position: relative;
+    }
+    .interview-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/video-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .interview-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Branding card hover */
+    .branding-card .branding-img {
+      transition: opacity 0.18s;
+    }
+    .branding-card:hover .branding-img {
+      opacity: 0;
+    }
+    .branding-card .pthumb {
+      position: relative;
+    }
+    .branding-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/branding-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .branding-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* New styles for Motion Design card hover */
+.card-motion .motion-icon-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+}
+.card-motion .motion-icon-img,
+.card-motion .motion-icon-lottie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54px;
+  height: 54px;
+  transition: opacity 0.18s;
+}
+.card-motion .motion-icon-img {
+  opacity: 1;
+  z-index: 1;
+  object-fit: contain;
+  /* Prevent inherited squishing */
+  max-width: none;
+  height: 54px;
+  width: 54px;
+  display: block;
+}
+.card-motion .motion-icon-lottie {
+  opacity: 0;
+  z-index: 2;
+  pointer-events: auto;
+}
+.card-motion:hover .motion-icon-img {
+  opacity: 0;
+}
+.card-motion:hover .motion-icon-lottie {
+  opacity: 1;
+}
+
+/* Video Editing card hover */
+.card-video .video-icon-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+}
+.card-video .video-icon-img,
+.card-video .video-icon-lottie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54px;
+  height: 54px;
+  transition: opacity 0.18s;
+}
+.card-video .video-icon-img {
+  opacity: 1;
+  z-index: 1;
+  object-fit: contain;
+  /* Prevent inherited squishing */
+  max-width: none;
+  height: 54px;
+  width: 54px;
+  display: block;
+}
+.card-video .video-icon-lottie {
+  opacity: 0;
+  z-index: 2;
+  pointer-events: auto;
+}
+.card-video:hover .video-icon-img {
+  opacity: 0;
+}
+.card-video:hover .video-icon-lottie {
+  opacity: 1;
+}
+
+/* New styles for Web Development card hover */
+.card-web .web-icon-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+}
+.card-web .web-icon-img,
+.card-web .web-icon-lottie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54px;
+  height: 54px;
+  transition: opacity 0.18s;
+}
+.card-web .web-icon-img {
+  opacity: 1;
+  z-index: 1;
+  object-fit: contain;
+  /* Prevent inherited squishing */
+  max-width: none;
+  height: 54px;
+  width: 54px;
+  display: block;
+}
+.card-web .web-icon-lottie {
+  opacity: 0;
+  z-index: 2;
+  pointer-events: auto;
+}
+.card-web:hover .web-icon-img {
+  opacity: 0;
+}
+.card-web:hover .web-icon-lottie {
+  opacity: 1;
+}
+
+.card-motion > div,
+.card-video > div,
+.card-web > div {
+  padding-left: 32px;
+}
+    </style>
+</head>
+
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+
+<body>
+    
+
+
+<canvas class="gradient-canvas" data-transition-in></canvas>
+
+
+
+
+
+    <div class="page">
+    <header>
+      <div class="wrap navwrap">
+        <a class="brand" href="#top">MollyMotion</a>
+        <nav>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a class="cta" href="#contact">Contact</a>
+          <!-- Remove theme toggle button -->
+          <!-- <button id="theme-toggle" class="toggle" type="button" aria-label="Switch to dark mode">☾</button> -->
+        </nav>
+      </div>
+    </header>
+
+    <a id="top"></a>
+    <!-- Hero -->
+    <section class="hero">
+        
+      <div class="wrap">
+        <!-- Logo: show black logo in light mode, default logo in dark mode -->
+        <img
+          src="images/mollymotion-logo.png"
+          alt="MollyMotion Logo"
+          id="hero-logo"
+          style="width:420px;max-width:50vw;margin-bottom:1.2rem;display:block;"
+        >
+        <h1>Motion design. Video editing. Web development.</h1>
+        <p class="sub">Motion, across video + web.</p>
+        <div class="actions">
+          <a class="btn btn-accent" href="#work">Work</a>
+          <a class="btn ghost" href="#contact">Start a project</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <a id="services"></a>
+    <section id="services">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>Motion systems for video and web.</h2>
+          </div>
+        </div>
+        <div class="grid3">
+  <a href="#work" class="card card-motion" style="display:flex;align-items:center;gap:1.1rem;text-decoration:none;cursor:pointer;position:relative;">
+    <span class="motion-icon-wrap">
+      <img src="images/icon-motion.png" alt="Motion Graphics Icon" class="motion-icon-img" />
+      <dotlottie-player
+        src="images/icon-motion.lottie"
+        background="transparent"
+        speed="1"
+        class="motion-icon-lottie"
+        loop
+        autoplay
+      ></dotlottie-player>
+    </span>
+    <div>
+      <h3 style="margin:0 0 .25rem;">Motion Design</h3>
+      <p>Explainers, titles, ads — senior motion that makes the message land. Clear scope. Reliable timeline.</p>
+    </div>
+  </a>
+  <a href="#work" class="card card-video" style="display:flex;align-items:center;gap:1.1rem;text-decoration:none;cursor:pointer;position:relative;">
+    <span class="video-icon-wrap">
+      <img src="images/icon-video.png" alt="Video Icon" class="video-icon-img" />
+      <dotlottie-player
+        src="images/icon-video.lottie"
+        background="transparent"
+        speed="1"
+        class="video-icon-lottie"
+        loop
+        autoplay
+      ></dotlottie-player>
+    </span>
+    <div>
+      <h3 style="margin:0 0 .25rem;">Video Editing</h3>
+      <p>Interviews and performance cuts shaped into story. Clean color, captions, platform-ready crops—on a dependable turnaround.</p>
+    </div>
+  </a>
+  <a href="#work" class="card card-web" style="display:flex;align-items:center;gap:1.1rem;text-decoration:none;cursor:pointer;">
+    <span class="web-icon-wrap">
+      <img src="images/icon-web.png" alt="Web Icon" class="web-icon-img" />
+      <dotlottie-player
+        src="images/icon-web.lottie"
+        background="transparent"
+        speed="1"
+        class="web-icon-lottie"
+        loop
+        autoplay
+      ></dotlottie-player>
+    </span>
+    <div>
+      <h3 style="margin:0 0 .25rem;">Web Development</h3>
+      <p>Lean builds with purposeful web animation—micro-interactions, Lottie/SVG, animated logos, scroll cues. Fast ship, clean handoff.</p>
+    </div>
+  </a>
+</div>
+      </div>
+    </section>
+    <!-- Work -->
+    <a id="work"></a>
+    <section id="work">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>Selected Work</h2>
+            <p class="sub"></p>
+          </div>
+          <a class="btn ghost" href="#contact">Ask for full reel</a>
+        </div>
+        <div class="grid3">
+          <!-- Snoozli Ad -->
+          <a class="pcard snoozli-card" href="https://youtube.com/shorts/qxrotI9MHSY?feature=share" target="_blank" rel="noopener noreferrer" aria-label="Snoozli Product Spot">
+            <div class="pthumb">
+              <img src="images/snoozli.png" alt="Snoozli Product Spot" class="snoozli-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Snoozli - spec product spot, vertical</h3>
+              <p>Concept + script · 3D device animation · UI motion · edit · CTA</p>
+              <ul class="ptags"><li>Spec</li><li>UI Motion</li><li>3D</li><li>Vertical</li></ul>
+
+            </div>
+          </a>
+          <!-- Lyric Video -->
+          <a class="pcard lyric-card" href="https://youtu.be/QWGhHxQWPLc?si=QxgGZS_O-1JqB0Dz" target="_blank" rel="noopener noreferrer" aria-label="Lyric Video">
+            <div class="pthumb">
+              <img src="https://img.youtube.com/vi/QWGhHxQWPLc/hqdefault.jpg" alt="Lyric Video — YouTube" class="lyric-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Cartoon Lyric Video</h3>
+              <p>Character animation + scene design · music sync · kinetic type</p>
+              <ul class="ptags"><li>Character Animation</li><li>Scene Design</li><li>Kinetic Type</li></ul>
+            </div>
+          </a>
+          <!-- Logo Animation -->
+          <a class="pcard logo-card" href="https://youtu.be/xB-8pow6rsA" target="_blank" rel="noopener noreferrer" aria-label="Logo Animation">
+            <div class="pthumb">
+              <img src="https://img.youtube.com/vi/xB-8pow6rsA/hqdefault.jpg" alt="Logo Animation — YouTube" class="logo-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Logo reveal - intro + outro</h3>
+              <p>Concept + AE animation · brand-safe motion</p>
+              <ul class="ptags"><li>Brand Animation</li><li>Motion Design</li><li>AE</li></ul>
+            </div>
+          </a>
+          <!-- Interview Edit (moved up) -->
+          <a class="pcard interview-card" href="https://youtu.be/Fpr40_38L3U?si=aaubWrGG8CsrlhkO" target="_blank" rel="noopener noreferrer" aria-label="Recent Edited Video">
+            <div class="pthumb">
+              <img src="https://img.youtube.com/vi/Fpr40_38L3U/hqdefault.jpg" alt="Recent Edit — YouTube" class="interview-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Interview cut (story edit)</h3>
+              <p>Dialogue shaping · pacing · color grade · 3D asset integration (shaded + animated) · motion overlays</p>
+              <ul class="ptags"><li>Video Editing</li><li>Color Grade</li><li>3D Integration</li><li>Motion Graphics</li></ul>
+            </div>
+          </a>
+          <!-- Branding System (moved down) -->
+          <a class="pcard branding-card" href="#branding" aria-label="Branding Section">
+            <div class="pthumb">
+              <img src="images/branding.png" alt="Branding" class="branding-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Branding System - social + merch</h3>
+              <p>Consistent type/color · reusable layouts</p>
+              <ul class="ptags"><li>Branding</li><li>Social</li><li>Merch</li><li>Flyers</li></ul>
+            </div>
+          </a>
+          <!-- Band Website -->
+          <a class="pcard web-card" href="https://nsr-staticmobsil.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Band Website">
+            <div class="pthumb">
+              <img src="images/web.png" alt="Band Website Preview" class="web-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Band microsite - static build</h3>
+              <p>Responsive site with web animation - scroll cues · parallax · SVG polygon transitions.</p>
+              <ul class="ptags"><li>Web</li><li>Web Animation</li><li>SVG</li></ul>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <a id="about"></a>
+    <section id="about">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>About</h2>
+            <p class="sub">Solo studio, Houston → clients anywhere.</p>
+          </div>
+        </div>
+        <div class="copycols">
+          <div style="display:flex;align-items:flex-start;">
+            <p style="margin-right:1.2rem;">Motion for video + web; editing for story. Strong at ideation and problem-solving. I translate briefs into clear frames, edits, and builds.</p>
+            <img src="images/molly.png" alt="Molly" style="width:92px;height:auto;border-radius:12px;margin-left:1.2rem;margin-top: -3rem;flex-shrink:0;">
+          </div>
+          <p>Tools: After Effects, Premiere Pro, DaVinci Resolve, HTML/CSS/JS. Simple stack. Clean handoff.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <a id="contact"></a>
+    <section id="contact">
+        <canvas class="gradient-canvas" data-transition-in></canvas>
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>Contact</h2>
+            <p class="sub">Send a link and goals. Quick, clear replies.</p>
+          </div>
+        </div>
+        <p class="wrap">Email <a href="mailto:hello@mollymotion.com">hello@mollymotion.com</a></p>
+      </div>
+    </section>
+
+    <!-- Branding -->
+    <a id="branding"></a>
+    <section id="branding">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>Branding</h2>
+            <p class="sub">Cohesive look across promos, merch, and announcements.</p>
+          </div>
+        </div>
+        <div class="grid3" style="align-items:stretch;">
+          <!-- Left: Vertical Instagram video -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <video src="images/branding/meet-the-band.mp4" controls playsinline muted loop style="width:100%;aspect-ratio:9/16;border-radius:12px;object-fit:cover;background:#000;"></video>
+            <div style="margin-top:.7rem;">
+              <h3 style="margin-bottom:.3rem;">Meet the Band · Instagram Reel</h3>
+              <p class="sub" style="margin-bottom:0;">Promo video</p>
+            </div>
+          </div>
+          <!-- Middle: Two images stacked vertically -->
+          <div class="card" style="display:flex;flex-direction:column;gap:.8rem;justify-content:center;">
+            <div>
+              <img src="images/branding/t-shirt.png" alt="Band T-shirt" style="width:100%;border-radius:12px;object-fit:cover;">
+              <h3 style="margin:.5rem 0 .2rem;">T-shirt Design</h3>
+              <p class="sub" style="margin-bottom:0;">Merch</p>
+            </div>
+            <div>
+              <img src="images/branding/sticker.png" alt="Band Sticker" style="width:100%;border-radius:12px;object-fit:cover;">
+              <h3 style="margin:.5rem 0 .2rem;">Sticker Design</h3>
+              <p class="sub" style="margin-bottom:0;">Merch</p>
+            </div>
+          </div>
+          <!-- Right: Vertical Instagram video -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <video src="images/branding/TNSY.mp4" controls playsinline muted loop style="width:100%;aspect-ratio:9/16;border-radius:12px;object-fit:cover;background:#000;"></video>
+            <div style="margin-top:.7rem;">
+              <h3 style="margin-bottom:.3rem;">Show Promo · Instagram Reel</h3>
+              <p class="sub" style="margin-bottom:0;">Promo video</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <p>© <span id="y"></span> MollyMotion</p>
+      </div>
+    </footer>
+  </div>
+
+
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Theme toggle
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const logo = document.getElementById('hero-logo');
+
+      function apply(mode, persist=true){
+        if(mode === 'dark'){
+          root.setAttribute('data-theme','dark');
+          btn.textContent = '☀︎';
+          btn.setAttribute('aria-label','Switch to light mode');
+          if(logo) logo.src = "images/mollymotion-logo.png";
+        }else{
+          root.setAttribute('data-theme','light');
+          btn.textContent = '☾';
+          btn.setAttribute('aria-label','Switch to dark mode');
+          if(logo) logo.src = "images/mollymotion-logo-black.png";
+        }
+        if(persist) localStorage.setItem('theme', mode);
+      }
+
+      // Initial mode: saved > system preference (no persist on initial)
+      const saved = localStorage.getItem('theme');
+      if(saved){
+        apply(saved, false);
+      }else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+        apply('dark', false);
+      }else{
+        apply('light', false);
+      }
+
+      btn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'light';
+        apply(current === 'dark' ? 'light' : 'dark', true);
+      });
+    })();
+  </script>
+
+    
+
+    <script src="gradient.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const gradient = new Gradient();
+            gradient.freqX = 7e-5;
+            gradient.freqY = 14e-5;
+            gradient.activeColors = [
+                1.0,    // First color (purple) - full presence
+                0.8,    // Second color (red) - reduced presence
+                1.0,    // Third color (dark purple) - strong presence
+                1.0     // Fourth color (burgundy) - medium presence
+            ];
+            gradient.initGradient('.gradient-canvas');
+        });
+    </script>
+</body>
+</html>
