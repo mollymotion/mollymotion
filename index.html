@@ -348,6 +348,20 @@
         font-size: clamp(1.8rem,8vw,2.4rem);
         line-height: 1.2;
       }
+      .hero h1::after {
+        content: "Motion design.\A Video editing.\A Web development.";
+        white-space: pre;
+        display: block;
+      }
+      .hero h1 {
+        font-size: 0;
+      }
+      .hero h1::after {
+        font-size: clamp(1.8rem,8vw,2.4rem);
+      }
+      #hero-logo {
+        max-width: 65vw !important;
+      }
     }
 
     .snoozli-card .snoozli-img {
