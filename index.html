@@ -340,10 +340,14 @@
       .grid3 { grid-template-columns: 1fr; }
       .copycols { grid-template-columns: 1fr; }
       nav { gap: .5rem; }
-      .page { margin: 0px auto; border-radius: 0px; }
-      .wrap { width: min(1100px, 88vw); margin: 0 auto; }
+      .page { margin: 0px auto; border-radius: 0px; width: 100%; }
+      .wrap { width: min(1100px, 84vw); margin: 0 auto; }
       .card { padding: 1.5rem; }
       .pmeta { padding: 1.2rem 1.3rem; }
+      .hero h1 { 
+        font-size: clamp(1.8rem,8vw,2.4rem);
+        line-height: 1.2;
+      }
     }
 
     .snoozli-card .snoozli-img {
