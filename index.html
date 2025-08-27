@@ -281,6 +281,31 @@
         background-color: #010101;
     }
 
+    #about {
+        position: relative;
+    }
+
+    #about::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: url('images/molly-about.png');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: contain;
+        opacity: 0.3;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    #about .wrap {
+        position: relative;
+        z-index: 1;
+    }
+
     #contact {
       background-color: rgba(0, 0, 0, 0.5);
     }
@@ -361,6 +386,9 @@
       }
       #hero-logo {
         max-width: 65vw !important;
+      }
+      #about::before {
+        opacity: 0.1;
       }
     }
 
@@ -834,7 +862,6 @@
         <div class="copycols">
           <div style="display:flex;align-items:flex-start;">
             <p style="margin-right:1.2rem;">Motion for video + web; editing for story. Strong at ideation and problem-solving. I translate briefs into clear frames, edits, and builds.</p>
-            <img src="images/molly.png" alt="Molly" style="width:92px;height:auto;border-radius:12px;margin-left:1.2rem;margin-top: -2rem;flex-shrink:0;">
           </div>
           <p>Tools: After Effects, Premiere Pro, DaVinci Resolve, HTML/CSS/JS. Simple stack. Clean handoff.</p>
         </div>
