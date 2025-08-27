@@ -55,7 +55,10 @@
        Base & Layout
     ============================ */
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { 
+      scroll-behavior: smooth; 
+      scroll-padding-top: 50px;
+    }
     body {
       margin: 0;
       color: var(--ink);
@@ -151,7 +154,6 @@
     section {
       padding: 56px 0;
       border-bottom: 1px solid var(--line);
-      scroll-margin-top: 84px;
       position: relative;
       background: var(--paper);
     }
@@ -317,6 +319,7 @@
     #services {
         background-color: rgba(0, 0, 0, 0.5);
         padding-top: 0px;
+        scroll-margin-top: 30px;
     }
 
     /* ===========================
