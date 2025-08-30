@@ -882,7 +882,7 @@
             <p class="sub">I'd love to learn about your project. Drop me a line, let's map it out.</p>
           </div>
         </div>
-        <p class="wrap">Email <a href="mailto:hello@mollymotion.dev">hello@mollymotion.dev</a></p>
+        <p class="wrap">Email <span id="email-contact"></span></p>
       </div>
     </section>
 
@@ -942,6 +942,17 @@
   <script>
     // Year
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Email obfuscation
+    (function(){
+      const user = 'hello';
+      const domain = 'mollymotion.dev';
+      const emailElement = document.getElementById('email-contact');
+      if(emailElement) {
+        const email = user + '@' + domain;
+        emailElement.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+      }
+    })();
 
     // Theme toggle
     (function(){
