@@ -318,8 +318,21 @@
 
     #services {
         background-color: rgba(0, 0, 0, 0.5);
-        padding-top: 0px;
         scroll-margin-top: 30px;
+    }
+
+    .video-embed {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 1.2rem;
+    }
+
+    .video-embed iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
     }
 
     /* ===========================
@@ -343,7 +356,7 @@
        Hero Section
     ============================ */
     .hero {
-      padding: 8vh 0 6vh;
+      padding: 4vh 0 0vh;
       background-color: rgba(0, 0, 0, 0.5);
       border-bottom: none;
     }
@@ -689,12 +702,12 @@
     <section class="hero">
         
       <div class="wrap">
-        <!-- Logo: show black logo in light mode, default logo in dark mode -->
+        <!-- Logo -->
         <img
           src="images/mollymotion-logo.png"
           alt="MollyMotion Logo"
           id="hero-logo"
-          style="width:640px;max-width:50vw;margin-bottom:1.2rem;display:block;"
+          style="width:640px;max-width:50vw;margin-bottom:0.5rem;display:block;"
         >
         <h1>Motion design. Video editing. Web development.</h1>
         <p class="sub">Motion, across video + web.</p>
@@ -710,8 +723,8 @@
     <section id="services">
       <div class="wrap">
         <div class="head">
-          <div>
-            <h2>Motion systems for video and web.</h2>
+          <div class="video-embed">
+            <iframe src="https://www.youtube-nocookie.com/embed/P1So-j3QXYk?si=EoyWwpI3oGUS4Hjg&amp;controls=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         </div>
         <div class="grid3">
@@ -777,9 +790,7 @@
           <div>
             <h2>Selected Work</h2>
             <p class="sub"></p>
-          </div>
-          <a class="btn ghost" href="#contact">Request reel</a>
-        </div>
+
         <div class="grid3">
           <!-- Snoozli Ad -->
           <a class="pcard snoozli-card" href="https://youtube.com/shorts/qxrotI9MHSY?feature=share" target="_blank" rel="noopener noreferrer" aria-label="Snoozli Product Spot">
@@ -866,7 +877,7 @@
           <div style="display:flex;align-items:flex-start;">
             <p style="margin-right:1.2rem;">Motion for video + web; editing for story. Strong at ideation and problem-solving. I translate briefs into clear frames, edits, and builds.</p>
           </div>
-          <p>Tools: After Effects, Premiere Pro, DaVinci Resolve, HTML/CSS/JS. Simple stack. Clean handoff.</p>
+          <p>Tools: After Effects, Premiere Pro, DaVinci Resolve, Blender, HTML/CSS/JS. Simple stack. Clean handoff.</p>
         </div>
       </div>
     </section>
@@ -954,42 +965,7 @@
       }
     })();
 
-    // Theme toggle
-    (function(){
-      const root = document.documentElement;
-      const btn = document.getElementById('theme-toggle');
-      const logo = document.getElementById('hero-logo');
-
-      function apply(mode, persist=true){
-        if(mode === 'dark'){
-          root.setAttribute('data-theme','dark');
-          btn.textContent = '☀︎';
-          btn.setAttribute('aria-label','Switch to light mode');
-          if(logo) logo.src = "images/mollymotion-logo.png";
-        }else{
-          root.setAttribute('data-theme','light');
-          btn.textContent = '☾';
-          btn.setAttribute('aria-label','Switch to dark mode');
-          if(logo) logo.src = "images/mollymotion-logo-black.png";
-        }
-        if(persist) localStorage.setItem('theme', mode);
-      }
-
-      // Initial mode: saved > system preference (no persist on initial)
-      const saved = localStorage.getItem('theme');
-      if(saved){
-        apply(saved, false);
-      }else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-        apply('dark', false);
-      }else{
-        apply('light', false);
-      }
-
-      btn.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme') || 'light';
-        apply(current === 'dark' ? 'light' : 'dark', true);
-      });
-    })();
+    
   </script>
 
     
