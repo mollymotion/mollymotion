@@ -299,6 +299,10 @@
         background-color: #010101;
     }
 
+    #album-art {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
     #about {
         position: relative;
     }
@@ -564,6 +568,30 @@
       pointer-events: none;
     }
     .branding-card:hover .pthumb::after {
+      opacity: 1;
+    }
+
+    /* Album Art card hover */
+    .album-card .album-img {
+      transition: opacity 0.18s;
+    }
+    .album-card:hover .album-img {
+      opacity: 0;
+    }
+    .album-card .pthumb {
+      position: relative;
+    }
+    .album-card .pthumb::after {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: url('images/albumart-hover.gif') center center/cover no-repeat;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .album-card:hover .pthumb::after {
       opacity: 1;
     }
 
@@ -869,7 +897,8 @@
             <p class="sub"></p>
 
         <div class="grid3">
-          <!-- Snoozli Ad -->
+          <!-- Snoozli Ad - COMMENTED OUT -->
+          <!-- 
           <a class="pcard snoozli-card" href="https://youtube.com/shorts/qxrotI9MHSY?feature=share" target="_blank" rel="noopener noreferrer" aria-label="Snoozli Product Spot">
             <div class="pthumb">
               <img src="images/snoozli.png" alt="Snoozli Product Spot" class="snoozli-img" style="width:100%;height:100%;object-fit:cover;">
@@ -878,9 +907,46 @@
               <h3>Snoozli - spec product spot, vertical</h3>
               <p>Concept + script · 3D device animation · UI motion · edit · CTA</p>
               <ul class="ptags"><li>Spec</li><li>UI Motion</li><li>3D</li><li>Vertical</li></ul>
-
             </div>
           </a>
+          -->
+
+          <!-- Branding System -->
+          <a class="pcard branding-card" href="#branding" aria-label="Branding Section">
+            <div class="pthumb">
+              <img src="images/branding.png" alt="Branding" class="branding-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Branding System - social + merch</h3>
+              <p>Consistent type/color · reusable layouts</p>
+              <ul class="ptags"><li>Branding</li><li>Social</li><li>Merch</li><li>Flyers</li></ul>
+            </div>
+          </a>
+          
+          <!-- Band Website -->
+          <a class="pcard web-card" href="https://noneshallremain.com" target="_blank" rel="noopener noreferrer" aria-label="Band Website">
+            <div class="pthumb">
+              <img src="images/web.png" alt="Band Website Preview" class="web-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Band microsite - static build</h3>
+              <p>Responsive site with web animation - scroll cues · parallax · SVG polygon transitions.</p>
+              <ul class="ptags"><li>Web</li><li>Web Animation</li><li>SVG</li></ul>
+            </div>
+          </a>
+
+          <!-- Album Art & Social Animations -->
+          <a class="pcard album-card" href="#album-art" aria-label="Album Art & Social Animations">
+            <div class="pthumb">
+              <img src="images/albumart-card.png" alt="Album Art & Social Animations" class="album-img" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="pmeta">
+              <h3>Album Art & Social Animations</h3>
+              <p>Static album cover animated for social media · Instagram stories · promotional content</p>
+              <ul class="ptags"><li>Album Art</li><li>Social Media</li><li>Motion Graphics</li><li>Branding</li></ul>
+            </div>
+          </a>
+
           <!-- Lyric Video -->
           <a class="pcard lyric-card" href="https://youtu.be/QWGhHxQWPLc?si=QxgGZS_O-1JqB0Dz" target="_blank" rel="noopener noreferrer" aria-label="Lyric Video">
             <div class="pthumb">
@@ -892,18 +958,8 @@
               <ul class="ptags"><li>Character Animation</li><li>Scene Design</li><li>Kinetic Type</li></ul>
             </div>
           </a>
-          <!-- Logo Animation -->
-          <a class="pcard logo-card" href="https://youtu.be/xB-8pow6rsA" target="_blank" rel="noopener noreferrer" aria-label="Logo Animation">
-            <div class="pthumb">
-              <img src="https://img.youtube.com/vi/xB-8pow6rsA/hqdefault.jpg" alt="Logo Animation — YouTube" class="logo-img" style="width:100%;height:100%;object-fit:cover;">
-            </div>
-            <div class="pmeta">
-              <h3>Logo reveal - intro + outro</h3>
-              <p>Concept + AE animation · brand-safe motion</p>
-              <ul class="ptags"><li>Brand Animation</li><li>Motion Design</li><li>AE</li></ul>
-            </div>
-          </a>
-          <!-- Interview Edit (moved up) -->
+          
+          <!-- Interview Edit -->
           <a class="pcard interview-card" href="https://youtu.be/Fpr40_38L3U?si=aaubWrGG8CsrlhkO" target="_blank" rel="noopener noreferrer" aria-label="Recent Edited Video">
             <div class="pthumb">
               <img src="https://img.youtube.com/vi/Fpr40_38L3U/hqdefault.jpg" alt="Recent Edit — YouTube" class="interview-img" style="width:100%;height:100%;object-fit:cover;">
@@ -914,26 +970,16 @@
               <ul class="ptags"><li>Video Editing</li><li>Color Grade</li><li>3D Integration</li><li>Motion Graphics</li></ul>
             </div>
           </a>
-          <!-- Branding System (moved down) -->
-          <a class="pcard branding-card" href="#branding" aria-label="Branding Section">
+
+          <!-- Logo Animation -->
+          <a class="pcard logo-card" href="https://youtu.be/xB-8pow6rsA" target="_blank" rel="noopener noreferrer" aria-label="Logo Animation">
             <div class="pthumb">
-              <img src="images/branding.png" alt="Branding" class="branding-img" style="width:100%;height:100%;object-fit:cover;">
+              <img src="https://img.youtube.com/vi/xB-8pow6rsA/hqdefault.jpg" alt="Logo Animation — YouTube" class="logo-img" style="width:100%;height:100%;object-fit:cover;">
             </div>
             <div class="pmeta">
-              <h3>Branding System - social + merch</h3>
-              <p>Consistent type/color · reusable layouts</p>
-              <ul class="ptags"><li>Branding</li><li>Social</li><li>Merch</li><li>Flyers</li></ul>
-            </div>
-          </a>
-          <!-- Band Website -->
-          <a class="pcard web-card" href="https://noneshallremain.com" target="_blank" rel="noopener noreferrer" aria-label="Band Website">
-            <div class="pthumb">
-              <img src="images/web.png" alt="Band Website Preview" class="web-img" style="width:100%;height:100%;object-fit:cover;">
-            </div>
-            <div class="pmeta">
-              <h3>Band microsite - static build</h3>
-              <p>Responsive site with web animation - scroll cues · parallax · SVG polygon transitions.</p>
-              <ul class="ptags"><li>Web</li><li>Web Animation</li><li>SVG</li></ul>
+              <h3>Logo reveal - intro + outro</h3>
+              <p>Concept + AE animation · brand-safe motion</p>
+              <ul class="ptags"><li>Brand Animation</li><li>Motion Design</li><li>AE</li></ul>
             </div>
           </a>
         </div>
@@ -1018,6 +1064,45 @@
       </div>
     </section>
 
+    <!-- Album Art & Social Motion Applications -->
+    <a id="album-art"></a>
+    <section id="album-art">
+      <div class="wrap">
+        <div class="head">
+          <div>
+            <h2>Album Art & Social Animations</h2>
+            <p class="sub">Static album cover animated for social media and promotional content.</p>
+          </div>
+        </div>
+        <div class="grid3" style="align-items:stretch;">
+          <!-- Left: Static Album Cover -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <img src="images/albumart.png" alt="Album Cover" class="clickable-image" data-modal="albumart-modal" style="width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#000;">
+            <div style="margin-top:.7rem;">
+              <h3 style="margin-bottom:.3rem;">Album Cover</h3>
+              <p class="sub" style="margin-bottom:0;">Static artwork for streaming platforms</p>
+            </div>
+          </div>
+          <!-- Middle: Spotify Canvas -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <video src="images/spotify_canvas.mp4" controls playsinline muted loop style="width:100%;aspect-ratio:9/16;border-radius:12px;object-fit:cover;background:#000;"></video>
+            <div style="margin-top:.7rem;">
+              <h3 style="margin-bottom:.3rem;">Spotify Canvas</h3>
+              <p class="sub" style="margin-bottom:0;">Vertical animated loop for Spotify</p>
+            </div>
+          </div>
+          <!-- Right: Promo Video -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <video src="images/kts_promo.mp4" controls playsinline muted loop style="width:100%;aspect-ratio:9/16;border-radius:12px;object-fit:cover;background:#000;"></video>
+            <div style="margin-top:.7rem;">
+              <h3 style="margin-bottom:.3rem;">Song Promo Video</h3>
+              <p class="sub" style="margin-bottom:0;">Series promotional content for new release</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <div class="wrap">
         <p>© <span id="y"></span> MollyMotion</p>
@@ -1030,6 +1115,14 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <img src="images/branding/t-shirt.png" alt="Band T-shirt">
+    </div>
+  </div>
+
+  <!-- Modal for Album Art -->
+  <div id="albumart-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img src="images/albumart.png" alt="Album Cover">
     </div>
   </div>
 
